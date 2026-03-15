@@ -281,9 +281,10 @@ function submitForm() {
 
             if (!req.ok) throw new Error("Failed connecting to submission endpoint.");
 
+            const result = await req.json();
             btn.innerHTML = '<span class="btn-text">Submitted Successfully! ✓</span>';
             btn.style.backgroundColor = '#1f7a68'; // Green
-            alert("Your digital amenity packet has been successfully submitted and saved.");
+            alert(result.message || "Your digital amenity packet has been successfully submitted and saved.");
         })
         .catch(err => {
             console.error(err);
