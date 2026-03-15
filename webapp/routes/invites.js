@@ -130,7 +130,7 @@ router.post('/', async (req, res) => {
                 const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}`;
 
                 await transporter.sendMail({
-                    from: `"Avensong HOA" <${process.env.SMTP_USER}>`,
+                    from: `"Avensong HOA" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
                     to: tenantEmail,
                     subject: '2026 Avensong Amenity Access Packet — Tenant Invitation',
                     html: buildInviteEmail(homeownerName, propertyAddress, appUrl)
