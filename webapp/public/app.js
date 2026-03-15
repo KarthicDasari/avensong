@@ -127,8 +127,8 @@ async function inviteTenant() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to send invite.');
 
-        alert(`Tenant invite successfully recorded for ${email}. They will receive a secure link to complete their portion once email delivery is configured.`);
-        btn.textContent = 'Sent Successfully ✓';
+        alert(data.message);
+        btn.textContent = data.emailSent ? 'Email Sent ✓' : 'Invite Recorded ✓';
         document.getElementById('tenantInviteEmail').value = '';
         setTimeout(() => {
             btn.textContent = 'Send Tenant Invite';
