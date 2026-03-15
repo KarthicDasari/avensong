@@ -101,8 +101,8 @@ function toggleTenantFields() {
     }
 }
 
-// Dummy invite function
-function inviteTenant() {
+// Tenant invite function — calls real backend
+async function inviteTenant() {
     const email = document.getElementById('tenantInviteEmail').value;
     if (!email) {
         alert('Please enter a valid tenant email.');
@@ -113,16 +113,32 @@ function inviteTenant() {
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    // Simulate API call
-    setTimeout(() => {
-        alert(`Tenant invite successfully sent to ${email}. They will receive a secure link to complete their portion.`);
-        btn.textContent = 'Sent Successfully';
+    try {
+        const res = await fetch('/api/invites', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                tenantEmail: email,
+                propertyAddress: document.getElementById('propertyAddress')?.value || '',
+                homeownerName: document.getElementById('homeownerName')?.value || ''
+            })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to send invite.');
+
+        alert(`Tenant invite successfully recorded for ${email}. They will receive a secure link to complete their portion once email delivery is configured.`);
+        btn.textContent = 'Sent Successfully ✓';
         document.getElementById('tenantInviteEmail').value = '';
         setTimeout(() => {
-            btn.textContent = 'Send Invite Link';
+            btn.textContent = 'Send Tenant Invite';
             btn.disabled = false;
         }, 3000);
-    }, 1000);
+    } catch (err) {
+        alert('Error: ' + err.message);
+        btn.textContent = 'Send Tenant Invite';
+        btn.disabled = false;
+    }
 }
 
 // Form Submission & PDF Generation

@@ -22,3 +22,12 @@ CREATE TABLE IF NOT EXISTS Submissions (
     submission_data JSON,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS TenantInvites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tenant_email VARCHAR(255) NOT NULL,
+    property_address VARCHAR(200),
+    homeowner_name VARCHAR(150),
+    status ENUM('pending', 'completed') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

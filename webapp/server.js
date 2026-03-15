@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth');
 const contentRoutes = require('./routes/content');
 const submissionRoutes = require('./routes/submissions');
 const adminRoutes = require('./routes/admin');
+const inviteRoutes = require('./routes/invites');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/invites', inviteRoutes);
 
 // Only static routing is needed for this vanilla system
 
