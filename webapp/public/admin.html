@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Avensong</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d1d5db;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #8b1c1c;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h2 {
+            color: #8b1c1c;
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+
+        .status-msg {
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .status-msg.success {
+            color: #1f7a68;
+        }
+
+        .status-msg.error {
+            color: #e53e3e;
+        }
+
+        #uploadForm {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        input[type="file"] {
+            border: 1px solid #cbd5e0;
+            padding: 8px;
+            border-radius: 4px;
+            flex-grow: 1;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="app-header">
+        <h1>Avensong</h1>
+        <p>Admin Portal</p>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>Dashboard</h2>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="card">
+            <h3>Update Packet Terms (CMS)</h3>
+            <p>Upload the latest Avensong Amenity Access Packet PDF here. The system will automatically parse the
+                document to extract the updated Introduction, COVID Waiver, and Amenity Rules for the frontend.</p>
+
+            <form id="uploadForm">
+                <input type="file" id="pdfFile" accept="application/pdf" required>
+                <button type="submit" class="btn-primary" id="uploadBtn">Upload & Parse</button>
+            </form>
+            <div id="uploadStatus" class="status-msg"></div>
+        </div>
+
+        <div class="card">
+            <h3>Submitted Packets</h3>
+            <p>Review all digitally submitted amenity access packets.</p>
+            <button class="btn-primary" onclick="loadSubmissions()" id="loadSubsBtn" style="margin-bottom: 15px;">Load
+                Submissions</button>
+            <div id="submissionsArea">
+                <table id="submissionsTable" style="width:100%; border-collapse: collapse; display: none;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #8b1c1c; text-align: left;">
+                            <th style="padding: 8px;">ID</th>
+                            <th style="padding: 8px;">Name</th>
+                            <th style="padding: 8px;">Address</th>
+                            <th style="padding: 8px;">Type</th>
+                            <th style="padding: 8px;">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsBody"></tbody>
+                </table>
+                <p id="noSubmissions" style="display: none; color: #666; font-style: italic;">No submissions found.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin-login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = '/admin-login.html';
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('pdfFile');
+            const statusDiv = document.getElementById('uploadStatus');
+            const btn = document.getElementById('uploadBtn');
+
+            if (fileInput.files.length === 0) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Uploading...';
+            statusDiv.style.display = 'none';
+            statusDiv.className = 'status-msg';
+
+            const formData = new FormData();
+            formData.append('packet_pdf', fileInput.files[0]);
+
+            try {
+                const res = await fetch('/api/admin/upload-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    if (res.status === 401 || res.status === 403) {
+                        logout();
+                        return;
+                    }
+                    throw new Error(data.error || 'Failed to update PDF.');
+                }
+
+                statusDiv.textContent = 'PDF successfully parsed and website text updated! ✓';
+                statusDiv.classList.add('success');
+                statusDiv.style.display = 'block';
+                fileInput.value = ''; // clear
+            } catch (err) {
+                statusDiv.textContent = err.message;
+                statusDiv.classList.add('error');
+                statusDiv.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Upload & Parse';
+            }
+        });
+
+        async function loadSubmissions() {
+            const btn = document.getElementById('loadSubsBtn');
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+
+            try {
+                const res = await fetch('/api/submissions', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) {
+                    if (res.status === 401 || res.status === 403) { logout(); return; }
+                    throw new Error('Failed to load submissions.');
+                }
+
+                const data = await res.json();
+                const table = document.getElementById('submissionsTable');
+                const tbody = document.getElementById('submissionsBody');
+                const noSubs = document.getElementById('noSubmissions');
+
+                tbody.innerHTML = '';
+
+                if (data.length === 0) {
+                    table.style.display = 'none';
+                    noSubs.style.display = 'block';
+                } else {
+                    noSubs.style.display = 'none';
+                    table.style.display = 'table';
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.style.borderBottom = '1px solid #e2e8f0';
+                        tr.innerHTML = `
+                            <td style="padding: 8px;">${row.id}</td>
+                            <td style="padding: 8px;">${row.homeowner_name || '-'}</td>
+                            <td style="padding: 8px;">${row.property_address || '-'}</td>
+                            <td style="padding: 8px;">${row.resident_type || '-'}</td>
+                            <td style="padding: 8px;">${new Date(row.created_at).toLocaleDateString()}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Load Submissions';
+            }
+        }
+    </script>
+</body>
+
+</html>

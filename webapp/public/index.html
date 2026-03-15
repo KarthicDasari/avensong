@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avensong Amenity Access Packet</title>
+    <!-- Google Fonts: Open Sans for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header area -->
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="brand">Avensong</h1>
+            <p class="subtitle">Digital Amenity Access Packet 2026</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Section: Intro Letter -->
+        <details class="amenity-section" open>
+            <summary>
+                <h2>Introduction & Submission Options</h2>
+            </summary>
+            <div class="section-content">
+                <div class="intro-letter" id="cms-introduction">
+                    <!-- Dynamic Content Loaded from DB -->
+                    <p>Loading introduction...</p>
+                </div>
+
+                <div class="submission-options">
+                    <p><strong>Option 1: Email</strong><br>
+                        Scan, assemble and email the required pages in a SINGLE email to amenities@avensong.org.<br>
+                        &#10003; Please ensure PDF scans are legible – illegible files will not be processed.<br>
+                        &#10003; If emailing pictures, keep image file sizes around 1M each so they can be read for
+                        review and processing (illegible image files will be rejected).<br>
+                        &#10003; Please send all pages/images in ONE email – nobody can sort through emails to find
+                        and assemble your access packet for you.<br>
+                        &#10003; DO NOT SEND A LINK TO YOUR DOCUMENT. Avensong does not accept/access external
+                        links.</p>
+
+                    <p><strong>Option 2: mail (USPS)</strong><br>
+                        If you cannot fax or email your packet, you can mail it to Avensong Community c/o Homeside
+                        Properties, Inc., 900 North Point Pkwy, Suite 325, Alpharetta, GA 30005.<br>
+                        DO NOT BRING PACKETS TO HPI OFFICES - HPI DOES NOT ACCEPT IN-PERSON DROP-OFFS.</p>
+
+                    <div class="action-card highlight-option">
+                        <div class="action-content">
+                            <h3>Option 3: Digital Submission (Current Choice)</h3>
+                            <p>You may optionally submit this packet entirely online by completing the sections
+                                below. Once complete, you will sign digitally and the packet will be generated and
+                                sent directly to the HOA.</p>
+
+                            <div class="tenant-delegation homeowner-only">
+                                <h4 style="margin-top: 15px; color: var(--primary);">Delegate to Tenant</h4>
+                                <p>Are you a homeowner renting your property? Send this packet directly to your
+                                    tenant to complete their required forms and waivers.</p>
+                                <div class="input-inline">
+                                    <input type="email" id="tenantInviteEmail" placeholder="tenant@example.com">
+                                    <button class="btn btn-secondary" type="button" onclick="inviteTenant()">Send
+                                        Tenant Invite</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>If you have questions about this, please email amenities@avensong.org. We are happy to assist
+                    everyone during this process and hope we all have an enjoyable and safe 2026!</p>
+                <p>Thank you,<br>The Avensong HOA Board of Directors</p>
+            </div>
+        </details>
+
+        <!-- Section 1: Checklist -->
+        <details class="amenity-section">
+            <summary>
+                <h2>2026 Amenity Access Packet Checklist</h2>
+            </summary>
+            <div class="section-content">
+                <p><strong>Effective December 1, 2025</strong></p>
+                <p class="instruction">Please read and initial items on this page carefully. If you initial in the wrong
+                    place, or do not include a required document, your amenity card activation will be delayed.</p>
+                <p>Please make sure you have completed and have included these required 4 documents listed here with
+                    your packet submission:</p>
+
+                <div class="initial-group">
+                    <label>1. This checklist (this to help you make sure you do everything correctly)</label>
+                    <input type="text" class="initial-input check-initial" placeholder="Homeowner Initials" required>
+                </div>
+
+                <div class="initial-group">
+                    <label>2. The 2026 Census (even if you did it in 2025).</label>
+                    <input type="text" class="initial-input check-initial" placeholder="Homeowner Initials" required>
+                </div>
+
+                <div class="initial-group">
+                    <label>3. The 2026 COVID/Infectious Disease Waiver has been signed by resident homeowners or tenants
+                        who will be using the amenities (This has two pages with blanks that need to be
+                        completed).</label>
+                    <input type="text" class="initial-input check-initial" placeholder="Homeowner Initials" required>
+                </div>
+
+                <div class="initial-group">
+                    <label>4. The 2026 Avensong Amenity Rules, Use & Agreement, signed by homeowners and if leasing your
+                        home, your tenants, who will be using the amenities.</label>
+                    <input type="text" class="initial-input check-initial" placeholder="Homeowner Initials" required>
+                </div>
+
+                <p style="margin-top: 20px;">In addition to the documents listed above, it is the responsibility of all
+                    homeowners to confirm the following items. If you are unsure of what any of the items below are,
+                    please email amenities@avensong.org before submitting your access packet. Incorrectly initialing any
+                    of the following items will result in the delay of your amenity card activation.</p>
+
+                <div class="initial-group">
+                    <label> I (owner) have created and checked all my CINC and Town Square accounts and my accounts are
+                        all in good standing (no balances due and no open violations).</label>
+                    <input type="text" class="initial-input" placeholder="Homeowner Initials" required>
+                </div>
+
+                <div class="initial-group">
+                    <label> Village and Avencroft owners must complete and initial this statement (does not apply to
+                        Carriage homeowners):<br>I own a home in the Village or Avencroft section of Avensong and have
+                        also created the additional required online account portals for this property.</label>
+                    <input type="text" class="initial-input" placeholder="Homeowner Initials">
+                </div>
+
+                <div class="initial-group">
+                    <label> I am an investor and have a current confirmation email stating I have complied with all
+                        Avensong’s Leasing Rules for this property and will provide it upon request.</label>
+                    <input type="text" class="initial-input" placeholder="Investor Initials">
+                </div>
+            </div>
+        </details>
+
+        <!-- Section 2: Resident Census Information -->
+        <details class="amenity-section">
+            <summary>
+                <h2>2026 Avensong Homeowner/Resident Census</h2>
+            </summary>
+            <div class="section-content">
+                <p><strong>Effective December 1, 2025</strong></p>
+                <p>Dear Avensong Homeowners –<br>
+                    1) All homeowners wanting amenity access in 2026 must fill out the top section of this form.<br>
+                    2) Investors/Landlords – must also have your tenants fill out and sign the bottom section of this
+                    form.</p>
+
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+
+                <div class="flex-grid">
+                    <div class="input-group full-width">
+                        <label>Are you a Homeowner or a Tenant?</label>
+                        <div class="radio-group">
+                            <label class="custom-radio">
+                                <input type="radio" name="residentType" value="homeowner" checked
+                                    onchange="toggleTenantFields()">
+                                <span class="radiomark"></span> Homeowner/Landlord
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="residentType" value="tenant" onchange="toggleTenantFields()">
+                                <span class="radiomark"></span> Tenant
+                            </label>
+                        </div>
+                    </div>
+
+                    <h3 class="full-width" style="margin-top: 10px;">Homeowners:</h3>
+
+                    <div class="input-group">
+                        <label for="propertyAddress">Property Address:</label>
+                        <input type="text" id="propertyAddress" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="homeownerName">Homeowner Name:</label>
+                        <input type="text" id="homeownerName" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="emergencyPhone">Emergency Contact Phone Number:</label>
+                        <input type="tel" id="emergencyPhone" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Your contact E-mail address:</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="initial-group full-width">
+                        <label>I have registered at www.avensong.org and created all the required HOA accounts** for my
+                            property.</label>
+                        <input type="text" class="initial-input inline-initial" placeholder="(homeowner initials)"
+                            required>
+                        <p style="font-size: 0.85rem; margin-top: 5px; color: #666;">**If you are not sure what accounts
+                            need to be created, please email hoa@avensong.org for help.</p>
+                    </div>
+
+                    <!-- Tenant specific fields -->
+                    <div class="full-width tenant-field hidden">
+                        <h3 style="margin-top: 20px;">Tenants:</h3>
+                        <p>If you are a tenant renting your Avensong home, please complete the information below. Make
+                            sure your landlord has completed the section above.</p>
+                    </div>
+
+                    <div class="input-group tenant-field hidden">
+                        <label for="tenantName">Tenant Name:</label>
+                        <input type="text" id="tenantName">
+                    </div>
+
+                    <div class="input-group tenant-field hidden">
+                        <label for="tenantEmergencyPhone">Emergency Contact Phone Number:</label>
+                        <input type="tel" id="tenantEmergencyPhone">
+                    </div>
+
+                    <div class="input-group tenant-field hidden">
+                        <label for="tenantEmail">Your contact E-mail address:</label>
+                        <input type="email" id="tenantEmail">
+                    </div>
+
+                    <div class="input-group tenant-field hidden">
+                        <label for="leaseExpiration">Date current lease expires:</label>
+                        <input type="date" id="leaseExpiration">
+                    </div>
+
+                    <div class="initial-group full-width tenant-field hidden">
+                        <label>I have registered at www.avensong.org</label>
+                        <input type="text" class="initial-input inline-initial" placeholder="(tenant initials)">
+                    </div>
+                </div>
+
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--border);">
+                <p style="text-align: center; font-style: italic;">We appreciate your cooperation. We hope that by
+                    updating and confirming our records, we will be better able to serve all the owners and residents of
+                    Avensong.</p>
+            </div>
+        </details>
+
+        <!-- Section 3: COVID Waiver -->
+        <details class="amenity-section">
+            <summary>
+                <h2>2026 Avensong COVID/Infectious Disease Waiver</h2>
+            </summary>
+            <div class="section-content">
+                <div class="legal-text pdf-exact-text" id="cms-waiver">
+                    <!-- Dynamic Content Loaded from DB -->
+                    <p>Loading COVID Waiver...</p>
+                </div>
+
+                <div class="signature-container highlight-bg"
+                    style="margin-top: 20px; padding: 15px; border-radius: 8px;">
+                    <label>RELEASOR SIGNATURE:</label>
+                    <canvas id="waiverSignature" class="signature-pad"></canvas>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button class="btn btn-outline btn-clear" type="button" onclick="clearWaiverSignature()">Clear
+                            Signature</button>
+                        <p style="font-size: 0.85rem; color: #666;">Date will be automatically applied upon submission.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-top: 20px;">
+                    <label>Additional Residents and Minor Children (Print Names):</label>
+                    <textarea class="initial-input" style="height: 80px;"
+                        placeholder="Name 1, Name 2, Name 3..."></textarea>
+                </div>
+
+            </div>
+        </details>
+
+        <!-- Section 4: Amenity Rules & Agreement -->
+        <details class="amenity-section">
+            <summary>
+                <h2>2026 Avensong Amenity Rules, Use & Agreement</h2>
+            </summary>
+            <div class="section-content">
+                <div class="legal-text pdf-exact-text" id="cms-rules">
+                    <!-- Dynamic Content Loaded from DB -->
+                    <p>Loading Amenity Rules...</p>
+                </div>
+
+                <div class="signature-container highlight-bg"
+                    style="margin-top: 20px; padding: 15px; border-radius: 8px;">
+                    <label>By signing below, you agree to the rules above:</label>
+                    <canvas id="rulesSignature" class="signature-pad"></canvas>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <button class="btn btn-outline btn-clear" type="button" onclick="clearRulesSignature()">Clear
+                            Signature</button>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- Submission -->
+        <div class="submission-area">
+            <button class="btn btn-primary btn-large" type="button" onclick="submitForm()" id="submitBtn">
+                <span class="btn-text">Sign & Submit Digital Packet</span>
+            </button>
+            <p class="submit-disclaimer">By submitting, a legally binding PDF will be generated containing your exact
+                inputs and signatures, and securely delivered to the Avensong HOA.</p>
+        </div>
+
+    </main>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>
