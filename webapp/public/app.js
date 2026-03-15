@@ -1,6 +1,74 @@
 // Global signature pad references
 let waiverPad, rulesPad;
 
+// --- Authentication Logic ---
+function getToken() {
+    return localStorage.getItem('residentToken');
+}
+
+function updateAuthUI() {
+    const token = getToken();
+    const loginForm = document.getElementById('loginForm');
+    const loggedInBar = document.getElementById('loggedInBar');
+    const submitLoggedIn = document.getElementById('submitLoggedIn');
+    const submitNotLoggedIn = document.getElementById('submitNotLoggedIn');
+
+    if (token) {
+        try {
+            // Decode JWT payload to get username and role
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            document.getElementById('loggedInUser').textContent = payload.username;
+            document.getElementById('loggedInRole').textContent = payload.role;
+            loginForm.style.display = 'none';
+            loggedInBar.style.display = 'flex';
+            submitLoggedIn.style.display = 'block';
+            submitNotLoggedIn.style.display = 'none';
+        } catch {
+            residentLogout();
+        }
+    } else {
+        loginForm.style.display = 'block';
+        loggedInBar.style.display = 'none';
+        submitLoggedIn.style.display = 'none';
+        submitNotLoggedIn.style.display = 'block';
+    }
+}
+
+async function residentLogin() {
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    errorEl.style.display = 'none';
+
+    if (!username || !password) {
+        errorEl.textContent = 'Please enter username and password.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed.');
+
+        localStorage.setItem('residentToken', data.token);
+        updateAuthUI();
+    } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+    }
+}
+
+function residentLogout() {
+    localStorage.removeItem('residentToken');
+    updateAuthUI();
+}
+
 // Fetch Content on Load
 async function fetchCMSContent() {
     try {
@@ -27,6 +95,7 @@ async function fetchCMSContent() {
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchCMSContent();
+    updateAuthUI();
 
     const waiverCanvas = document.getElementById('waiverSignature');
     const rulesCanvas = document.getElementById('rulesSignature');
@@ -200,9 +269,13 @@ function submitForm() {
                 }
             };
 
+            const token = getToken();
             const req = await fetch('/api/submissions', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify(payload)
             });
 

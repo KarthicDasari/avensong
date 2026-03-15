@@ -565,3 +565,65 @@ input:focus {
     font-family: monospace;
     font-size: 0.82rem;
 }
+
+/* --- Login Banner --- */
+.login-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.login-banner-form p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.login-inline {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.login-inline input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.login-inline .btn {
+    white-space: nowrap;
+    padding: 0.6rem 1.2rem;
+}
+
+@media (max-width: 500px) {
+    .login-inline {
+        flex-direction: column;
+    }
+    .login-inline .btn {
+        width: 100%;
+    }
+}
+
+.login-banner-welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-banner-welcome p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.submit-login-prompt {
+    background: #fff8f0;
+    border: 1px solid #f0d0a0;
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    color: #8b6914;
+}

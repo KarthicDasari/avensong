@@ -21,6 +21,26 @@
         </div>
     </header>
 
+    <!-- Login Banner -->
+    <div class="container">
+        <div id="loginBanner" class="login-banner">
+            <div id="loginForm" class="login-banner-form">
+                <p><strong>🔒 Please sign in to complete and submit your packet.</strong></p>
+                <div class="login-inline">
+                    <input type="text" id="loginUsername" placeholder="Username">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <button class="btn btn-primary" type="button" onclick="residentLogin()">Sign In</button>
+                </div>
+                <p id="loginError" style="color: #e53e3e; font-size: 0.85rem; margin-top: 8px; display: none;"></p>
+                <p style="font-size: 0.8rem; color: #666; margin-top: 8px;">Sample: <code>resident1</code> / <code>Avensong2026!</code> or <code>tenant1</code> / <code>Avensong2026!</code></p>
+            </div>
+            <div id="loggedInBar" class="login-banner-welcome" style="display: none;">
+                <p>✅ Signed in as <strong id="loggedInUser"></strong> (<span id="loggedInRole"></span>)</p>
+                <button class="btn btn-outline" type="button" onclick="residentLogout()" style="padding: 4px 12px; font-size: 0.85rem;">Logout</button>
+            </div>
+        </div>
+    </div>
+
     <main class="container">
         <!-- Section: Intro Letter -->
         <details class="amenity-section" open>
@@ -301,11 +321,16 @@
 
         <!-- Submission -->
         <div class="submission-area">
-            <button class="btn btn-primary btn-large" type="button" onclick="submitForm()" id="submitBtn">
-                <span class="btn-text">Sign & Submit Digital Packet</span>
-            </button>
-            <p class="submit-disclaimer">By submitting, a legally binding PDF will be generated containing your exact
-                inputs and signatures, and securely delivered to the Avensong HOA.</p>
+            <div id="submitLoggedIn" style="display: none;">
+                <button class="btn btn-primary btn-large" type="button" onclick="submitForm()" id="submitBtn">
+                    <span class="btn-text">Sign & Submit Digital Packet</span>
+                </button>
+                <p class="submit-disclaimer">By submitting, a legally binding PDF will be generated containing your exact
+                    inputs and signatures, and securely delivered to the Avensong HOA.</p>
+            </div>
+            <div id="submitNotLoggedIn" class="submit-login-prompt">
+                <p>🔒 <strong>Please sign in at the top of the page</strong> to submit your digital packet.</p>
+            </div>
         </div>
 
     </main>
