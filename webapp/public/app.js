@@ -189,7 +189,8 @@ async function inviteTenant() {
             body: JSON.stringify({
                 tenantEmail: email,
                 propertyAddress: document.getElementById('propertyAddress')?.value || '',
-                homeownerName: document.getElementById('homeownerName')?.value || ''
+                homeownerName: document.getElementById('homeownerName')?.value || '',
+                homeownerEmail: document.getElementById('email')?.value || ''
             })
         });
 
