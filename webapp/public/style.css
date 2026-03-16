@@ -583,25 +583,45 @@ input:focus {
 
 .login-inline {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 10px;
+    gap: 0.75rem;
+    margin-top: 12px;
     align-items: center;
 }
 
 .login-inline input {
     flex: 1;
-    padding: 0.6rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #fafafa;
+    color: var(--text-strong);
+    transition: all var(--transition);
+    min-width: 0;
+}
+
+.login-inline input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--focus);
+    background: white;
 }
 
 .login-inline .btn {
     white-space: nowrap;
-    padding: 0.6rem 1.2rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    min-height: 46px;
 }
 
 @media (max-width: 500px) {
     .login-inline {
         flex-direction: column;
+    }
+    .login-inline input {
+        width: 100%;
     }
     .login-inline .btn {
         width: 100%;
